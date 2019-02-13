@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
-	"babel":{
+	"babel": {
 		"presets": [
 			"@babel/preset-env",
 			"@babel/preset-react"
@@ -14,6 +14,8 @@
 		"build": "webpack"
 	},
 	"dependencies": {
+		"@bootstrap-styled/provider": "^1.4.2",
+		"@bootstrap-styled/v4": "^3.0.4",
 		"axios": "^0.18.0",
 		"react": "^16.8.1",
 		"react-dom": "^16.8.1",
