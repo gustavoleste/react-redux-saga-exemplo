@@ -7,6 +7,7 @@ module.exports = {
                 path: path.join(__dirname, 'docs'),
                 filename: 'main.js'
         },
+        mode: 'production',
         module:{
                 rules: [
                         {

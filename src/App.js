@@ -1,4 +1,6 @@
 import React from 'react'
+import actions from './redux/actions'
+
 import {
         Button, 
         H1, 
@@ -11,8 +13,9 @@ import {
         CardHeader
 } from '@bootstrap-styled/v4'
 import styled from 'styled-components'
+import {connect} from 'react-redux'
 
-const app = () => (
+const app = ({ip,ua, requestIP, requestUA, ipRequest, uaRequest}) => (
         <Container>                              
                 <Row >
                         <Col>
@@ -24,15 +27,15 @@ const app = () => (
                                                 <Col >                                                                                                    
                                                         <CardBlock>
                                                                 <CardTitle>Meu IP</CardTitle>
-                                                                <CardText>0.0.0.0</CardText>
-                                                                <Button>Submit</Button>
+                                                                <CardText>{ip}</CardText>                                                                
+                                                                {ipRequest ? <p>Carregando...</p> : <Button onClick={requestIP}>Descobrir IP</Button>}
                                                         </CardBlock>                                                
                                                 </Col> 
                                                 <Col >                                                                                                    
                                                         <CardBlock>
-                                                                <CardTitle>Meu Navegador</CardTitle>
-                                                                <CardText>Desconhecido</CardText>
-                                                                <Button>Submit</Button>
+                                                                <CardTitle>Meu User-Agent</CardTitle>
+                                                                <CardText>{ua}</CardText>
+                                                                {uaRequest ? <p>Carregando...</p> : <Button onClick={requestUA}>Descobrir UA</Button>}                                                                
                                                         </CardBlock>                                                
                                                 </Col>
                                         </Row>                                       
@@ -42,7 +45,19 @@ const app = () => (
         </Container>
 )
 
-export default app
+const mapStateToProps = state => ({
+                ip: state.meuIP.ip,
+                ua: state.meuUA.ua,
+                ipRequest: state.meuIP.isFetching,
+                uaRequest: state.meuUA.isFetching
+})
+
+const mapDispatchToProps = dispatch => ({
+        requestIP: ()=> dispatch(actions.ipRequest()),
+        requestUA: ()=> dispatch(actions.uaRequest())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(app)
 
 const Container = styled.section`
        text-align: center;
